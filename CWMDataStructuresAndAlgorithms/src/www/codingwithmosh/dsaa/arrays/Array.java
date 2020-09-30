@@ -29,38 +29,19 @@ public class Array {
 	// can't call methods to see if empty, and can't check if equals 0
 	// for now, set all to -1
 	public void insert(int value) {	
-		// this was first version w/ using -1 for empties
-		// need to resize b/c array is full
-//		if(internalArr[internalArr.length -1] != -1) {
-//			internalArr = growArrayByOne(value);
-//		}else {
-//			
-//			for(int i = 0; i < internalArr.length; i++) {
-//				if(internalArr[i] == -1) {
-//					internalArr[i] = value;
-//					break;
-//				}
-//			}
-//		}
-		
 
-		// count by default is 0- need to increment every time we add
 		if(internalArr.length == count) {
-			internalArr = growArrayByOne(value);
+			
+			int[] copy = new int[count * 2];
+			for(int i = 0; i < count; i++) {
+				copy[i] = internalArr[i];
+			}
+			internalArr = copy;
 		}
 
 		internalArr[count++] = value;
 	}
 	
-	public int[] growArrayByOne(int newValue) {
-		
-		int[] copy = new int[internalArr.length + 1];
-		for(int i = 0; i < internalArr.length; i++) {
-			copy[i] = internalArr[i];
-		}
-		copy[copy.length - 1] = newValue;
-		return copy;
-	}
 	
 	public void removeAt(int index) {
 		
