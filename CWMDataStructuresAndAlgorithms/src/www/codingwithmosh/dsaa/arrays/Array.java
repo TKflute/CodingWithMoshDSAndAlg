@@ -1,99 +1,145 @@
 package www.codingwithmosh.dsaa.arrays;
 
 public class Array {
-
-	// this class should allow to:
-	// make a new Array with new keyword, passing in a length
-	// needs an internal array to store values
-	// when add new items, automatically grow, when remove, automatically shrink***
-	// it should have an insert method that can take any type of primitive/object? (not sure, just ints was shown) (must grow)
-	// should have a removeAt method that takes an index and removes that element (must shrink)
-	// print method? Mosh included it for convenience but says it wouldn't be included - prints each value
-	// should have an indexOf method that returns index of value passed in, -1 if value doesn't exist
 	
-	private int[] internalArr;
-	// this I didn't think to do on first solution:
+	private int[] items;
 	private int count;
 	
 	
 	public Array(int length) {
 		
-		internalArr = new int[length];
-//		for(int i = 0; i < internalArr.length; i++) {
-//			internalArr[i] = -1;
-//		}
+		items = new int[length];
 	}
 	
-	// inserting at first empty slot if it exists
-	// if no empty slots, need to resize/grow by one
-	// can't call methods to see if empty, and can't check if equals 0
-	// for now, set all to -1
 	public void insert(int value) {	
 
-		if(internalArr.length == count) {
+		if(items.length == count) {
 			
-			int[] copy = new int[count * 2];
-			for(int i = 0; i < count; i++) {
-				copy[i] = internalArr[i];
-			}
-			internalArr = copy;
+			resize();
 		}
 
-		internalArr[count++] = value;
+		items[count++] = value;
 	}
 	
 	
 	public void removeAt(int index) {
 		
-		// 1, 2, 3, 4, 5 -> remove index 2 -> 1, 2, 4, 5
-		// def will need to make new array with length-1 size
-		// how to copy right values? - can skip iteration when on that index
-		
-		int[] copy = new int[internalArr.length - 1];
-		int copyIndex = 0;
-		for(int i = 0; i < internalArr.length; i++) {
-			if(i == index) {
-				continue;
-			}else {
-				copy[copyIndex] = internalArr[i];
-				copyIndex++;
-			}
+		// validate index
+		if(index < 0 || index >= count) { // (if count is 4, last index is 3)
+			throw new IllegalArgumentException();
 		}
-		// duh! don't forget these kinds of steps
-		internalArr = copy;
+		
+		// shift items to left to fill empty slot
+		// **Mosh had i < count, not count -1
+		// but if I allocate the exact space I need for my array when initializing,
+		// and it hasn't been resized yet - will get OOB exception
+		for(int i = index; i < count - 1; i++) {
+			items[i] = items[i + 1];
+		}
+		
+		count--; // there will still be an item leftover in the array, but we won't track it
 	}
 	
 	public int indexOf(int value) {
-		// can do binary search here if sorted- but is that faster?
-//		int l = 0;
-//		int u = internalArr.length -2;
-//		
-//		while(l <= u) {
-//			int m = (l + u) / 2;
-//			if(internalArr[m] == value) {
-//				return m;
-//			}else if(internalArr[m] > value) {
-//				// search left
-//			}
-//		}
 		
-		for(int i = 0; i < internalArr.length; i++) {
-			if(internalArr[i] == value) {
+		for(int i = 0; i < items.length; i++) {
+			if(items[i] == value) {
 				return i;
 			}
 		}
 		return -1;
 	}
 	
-	public void print() {
-		// first version
-//		for(int val : internalArr) {
-//			System.out.println(val);
-//		}
-		
-		// using count
+	//1- Solution: Array.max() 
+	// Extend the Array class and add a new method to return the largest number. 
+	// What is the runtime complexity of this method? : O(n)
+	public int findMax() {
+		int max = items[0];
 		for(int i = 0; i < count; i++) {
-			System.out.println(internalArr[i]);
+			if(items[i] > max) {
+				max = items[i];
+			}
+		}
+		return max;
+	}
+	
+	public void resize() {
+		
+		int[] copy = new int[count * 2];
+		for(int i = 0; i < count; i++) {
+			copy[i] = items[i];
+		}
+		
+		items = copy;
+	}
+	
+	// 2- Solution: Array.intersect() 
+	// Extend the Array class and add a method to return the common items in this array
+	// and another array.   
+	// 5, 2, 6, 4 -> 3, 6, 2, 1  RTC: O(n^2)
+	// how to avoid having empty slots in intersect array? Can I use a List of Integers?
+	public int[] intersect(int[] otherItems) {
+		
+		int length;
+		if(items.length <= otherItems.length) {
+			length = items.length;
+		}else {
+			length = otherItems.length;
+		}
+		int[] intersect = new int[length];
+		int index = 0;
+		
+		for(int i = 0; i < count; i++) {
+			for(int j = 0; j < otherItems.length; j++) {
+				if(items[i] == otherItems[j]) {
+					intersect[index++] = items[i];
+				}
+			}
+		}
+		return intersect;
+	}
+	
+	// 3- Solution: Array.reverse()
+	// Extend the Array class and add a method to reverse the array. 
+	// For example, if the array includes [1, 2, 3, 4], after reversing and printing it, 
+	// we should see [4, 3, 2, 1].  
+	// Big O(n)
+	public void reverse() {
+		int[] copy = new int[count];
+		for(int i = count - 1; i >= 0; i--) {
+			copy[(count - 1) - i] = items[i];
+		}
+		items = copy;
+	}
+	
+	// 4-  Solution: Array.insertAt()
+	// Extend the Array class and add a new method to insert an item at a given index:
+	public void insertAt(int item, int index) {
+		
+		// resize if there is no room left (if length == count) and shift to the right
+		// 1, 2, 4, 5 -> add 3 at index 2 -> 
+		// resize if full, insert 3 at index 2 and shift 4 and 5 to right
+		if(items.length == count) {
+			resize();
+		}
+		
+		// just one insert; this stays outside of loop (but need to save old num)
+		int temp = items[index];
+		items[index] = item;
+		count++;
+		// shifting needs the loop
+		for(int i = index + 1; i < count; i++) {
+			int temp2 = items[i];
+			items[i] = temp;
+			temp = temp2;
+		}
+	}
+	
+	
+	public void print() {
+
+		for(int i = 0; i < count; i++) {
+			System.out.println(items[i]);
 		}
 	}
 
