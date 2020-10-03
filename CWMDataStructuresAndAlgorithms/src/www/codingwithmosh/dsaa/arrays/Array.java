@@ -78,6 +78,7 @@ public class Array {
 	// and another array.   
 	// 5, 2, 6, 4 -> 3, 6, 2, 1  RTC: O(n^2)
 	// how to avoid having empty slots in intersect array? Can I use a List of Integers?
+	// how to improve perf. of this one w/ manual solution?
 	public int[] intersect(int[] otherItems) {
 		
 		int length;
@@ -114,6 +115,7 @@ public class Array {
 	
 	// 4-  Solution: Array.insertAt()
 	// Extend the Array class and add a new method to insert an item at a given index:
+	// O(n)?
 	public void insertAt(int item, int index) {
 		
 		// resize if there is no room left (if length == count) and shift to the right
