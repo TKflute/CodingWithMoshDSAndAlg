@@ -1,4 +1,4 @@
-package www.codingwithmosh.dsaa.arrays;
+package com.codingwithmosh.dsaa.arrays;
 
 public class ArrayTests {
 

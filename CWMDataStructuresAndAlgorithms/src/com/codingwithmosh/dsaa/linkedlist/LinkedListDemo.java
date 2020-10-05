@@ -1,7 +1,5 @@
-package www.codingwithmosh.dsaa.linkedlist;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
+package com.codingwithmosh.dsaa.linkedlist;
+
 
 public class LinkedListDemo {
 
@@ -33,6 +31,17 @@ public class LinkedListDemo {
 		demo.showList();
 		demo.add(3, "David");
 		demo.showList();
+		
+		// testing my reverse method imp w/ swapped values (no copying list)
+		LinkedList list = new LinkedList();
+		list.addFirst(3);
+		list.addFirst(2);
+		list.addFirst(1);
+		
+		list.showList();
+		list.reverse2();
+		list.showList();
+		
 	}
 		
 	public void createList() {

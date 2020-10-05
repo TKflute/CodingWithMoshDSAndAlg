@@ -1,5 +1,8 @@
-package www.codingwithmosh.dsaa.linkedlist;
+package com.codingwithmosh.dsaa.linkedlist;
 
+
+// This is my original version from Java II
+// (I think I didn't have all last changes on BitBucket (not calling isEmpty(), and Generic methods are commented out))
 public class SinglyLinkedList {
 
 	private ListNode head;
@@ -8,7 +11,7 @@ public class SinglyLinkedList {
 		head = null;
 	}
 	
-	/*
+	/* 
 	public void add(T o) {
 		
 		if(head == null) {
@@ -61,7 +64,7 @@ public class SinglyLinkedList {
 	
 	
 	
-	//will add node to list
+	//will add node to LL in manner of List
 	//remember Lists are FIFO
 	public void add(String data) {
 		//if head is null, this is first item on list	

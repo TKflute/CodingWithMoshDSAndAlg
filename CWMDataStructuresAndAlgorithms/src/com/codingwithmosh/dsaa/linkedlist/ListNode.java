@@ -1,4 +1,4 @@
-package www.codingwithmosh.dsaa.linkedlist;
+package com.codingwithmosh.dsaa.linkedlist;
 
 public class ListNode {
 
