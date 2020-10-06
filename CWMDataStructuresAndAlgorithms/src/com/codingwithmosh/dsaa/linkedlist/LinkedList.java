@@ -63,6 +63,27 @@ public class LinkedList {
 	  last.next = null;
 	  first = previous; // (when break out of loop, current will be null)
   }
+  public int findNthNodeFromLast(int n)
+  {
+      // note: at end, double check for off by one errors
+
+      Node endPointer = first;
+      Node nthPointer = first;
+
+      for (int i = 1; i < size; i++)
+      {
+
+          endPointer = endPointer.next;
+          // easier to think about n here, which is why I started at 1
+          // once we are at node looking for, bump up both pointers
+          // this solution is when we don't know size- could loop to size - n and return
+          if(i >= n) {
+        	 nthPointer = nthPointer.next;
+          }
+      }
+
+       return nthPointer.value;
+  }
   
   public void showList() {
 		Node cNode = first;
@@ -73,6 +94,8 @@ public class LinkedList {
 			
 		System.out.println("NULL");
 	}
+  
+  // Mosh's code
   public void addFirst(int item) {
     var node = new Node(item);
 

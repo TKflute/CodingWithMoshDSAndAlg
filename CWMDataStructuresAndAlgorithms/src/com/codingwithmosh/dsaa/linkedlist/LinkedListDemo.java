@@ -34,6 +34,8 @@ public class LinkedListDemo {
 		
 		// testing my reverse method imp w/ swapped values (no copying list)
 		LinkedList list = new LinkedList();
+		list.addFirst(5);
+		list.addFirst(4);
 		list.addFirst(3);
 		list.addFirst(2);
 		list.addFirst(1);
@@ -41,6 +43,8 @@ public class LinkedListDemo {
 		list.showList();
 		list.reverse2();
 		list.showList();
+		int thirdFromLast = list.findNthNodeFromLast(3);
+		System.out.println("Third from last value: " + thirdFromLast);
 		
 	}
 		
