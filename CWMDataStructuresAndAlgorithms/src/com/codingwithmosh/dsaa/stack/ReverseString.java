@@ -18,6 +18,9 @@ public class ReverseString {
 		String helloWorld = "Hello World";
 		System.out.println(reverseString3(helloWorld));
 		System.out.println(reverseStringWithStack(hello));
+		
+		// BalancedExpression
+		String exp = "([1] + <2> == {3})";
 
 	}
 	
